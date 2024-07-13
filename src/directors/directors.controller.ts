@@ -9,6 +9,6 @@ export class DirectorsController {
 
     @Post()
     async createDirector(@Body() createDirectorDto : CreateDirectorDto){
-
+        return await this.directorService.createDirector(createDirectorDto) ;
     }
 }

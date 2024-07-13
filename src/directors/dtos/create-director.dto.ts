@@ -1,11 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import { IsNotEmpty, IsString, IsDate, IsEnum, IsOptional, IsInt, IsPositive, IsUrl } from 'class-validator';
+import { Gender } from 'src/entities/gender.enum';
 
-enum Gender {
-  MALE = 'male',
-  FEMALE = 'female',
-  OTHER = 'other',
-}
+
 
 export class CreateDirectorDto {
 
@@ -15,18 +13,17 @@ export class CreateDirectorDto {
    first_name: string;
 
    @ApiProperty()
-
   @IsNotEmpty()
   @IsString()
     last_name: string;
 
     @ApiProperty()
-
-  @IsNotEmpty()
-  @IsDate()
+    @IsNotEmpty()
+    @IsDate()
+    @Type(() => Date)
     birth_date: Date;
-    @ApiProperty()
 
+    @ApiProperty()
   @IsOptional()
   @IsString()
    bio?: string;
