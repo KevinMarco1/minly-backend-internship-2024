@@ -13,6 +13,7 @@ export class MoviesService {
     }
 
 
+
     public async getMoviesByLimitAndOffesetAndFilterBy(sortMovieWithOffsetDto : SortAndFilterAndPaginateMovieDto  ): Promise<Movie[]>{
 
         // check its a valid offset or not.

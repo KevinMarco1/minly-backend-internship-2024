@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BeforeUpdate, ManyToOne, ManyToMany, JoinTable, BeforeInsert } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BeforeUpdate, ManyToOne, ManyToMany, JoinTable, BeforeInsert, JoinColumn } from 'typeorm';
 import { AutoTimestamp } from './auto-time-stamp';
 import { uuidv7 } from '@kripod/uuidv7';
 import { Actor } from './actor.entity';
@@ -31,7 +31,8 @@ export class Movie extends AutoTimestamp {
   trailer: string;
 
   @ManyToOne(() => Director, (director) => director.movies)
-  director_id: Director;
+  @JoinColumn({ name: 'director_id' }) // Ensure this is explicitly set
+  director: Director;
 
 
   @BeforeInsert()

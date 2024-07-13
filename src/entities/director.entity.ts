@@ -35,8 +35,8 @@ export class Director extends AutoTimestamp {
 
   @Column({ type: 'bigint', nullable: true })
   number_of_awards: number;
-
-  @OneToMany(() => Movie, (movie) => movie.director_id)
+ 
+  @OneToMany(() => Movie, (movie) => movie.director)
   movies: Movie[];
 
   @BeforeInsert()

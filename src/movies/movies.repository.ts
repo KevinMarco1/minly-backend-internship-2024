@@ -3,17 +3,29 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Movie } from 'src/entities/movie.entity';
 import { Repository } from 'typeorm';
 import { CreateMovieDto } from './dtos/body/create-movie.dto';
+import { Director } from 'src/entities/director.entity';
 
 @Injectable()
 export class MoviesRepository {
   constructor(
     @InjectRepository(Movie)
     private movieRepository: Repository<Movie>,
+    @InjectRepository(Director)
+    private directorRepository: Repository<Director>,
   ) {}
 
   public async createMovie(movieData: CreateMovieDto): Promise<Movie> {
-    const newMovie = this.movieRepository.create(movieData);
-    return await this.movieRepository.save(newMovie);
+      const director = await this.directorRepository.findOne({ where: { id: movieData.director_id } });
+      if (!director) {
+        throw new Error('Director not found');
+      }
+      
+      const movie = this.movieRepository.create({
+        ...movieData,
+        director: director,
+      });
+      
+      return await this.movieRepository.save(movie);
   }
 
   public async getMoviesByLimitAndOffesetAndFilterBy(

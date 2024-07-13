@@ -15,9 +15,9 @@ export class MoviesController {
 
     @Get()
     async getMovies(
-       @Query() sortMovieDto: SortAndFilterAndPaginateMovieDto,
+       @Query() sortAndFilterAndPaginateMovieDto: SortAndFilterAndPaginateMovieDto,
 ){
-        return this.movieService.getMoviesByLimitAndOffesetAndFilterBy( sortMovieDto   ) ;
+        return this.movieService.getMoviesByLimitAndOffesetAndFilterBy( sortAndFilterAndPaginateMovieDto  ) ;
     }
 
 }

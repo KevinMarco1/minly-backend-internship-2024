@@ -17,11 +17,13 @@ export class SortAndFilterAndPaginateMovieDto{
     sortOrder? : string ;
 
 
+    @ApiProperty()
     @IsOptional()
     @IsString() 
     @IsNotEmpty()
     offset? : string ;
 
+    @ApiProperty()
     @IsOptional()
     @IsString() 
     @IsNotEmpty()
