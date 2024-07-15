@@ -34,11 +34,17 @@ export class MoviesRepository {
     sortBy: string | undefined,
     sortOrder: 'ASC' | 'DESC',
     filterValue?: string
-  ): Promise<Movie[]> {
+  ): Promise<Partial<Movie[]>> {
   
     const queryBuilder = this.movieRepository.createQueryBuilder('movie')
-      .take(limit)
-      .skip(offset);
+    .select([
+        'movie.poster',
+        'movie.uuid',
+        'movie.average_rating',
+        "movie.release_date"
+    ])
+    .take(limit)
+    .skip(offset);
   
     if (sortBy) {
       queryBuilder.orderBy(`movie.${sortBy}`, sortOrder);

@@ -8,13 +8,13 @@ import { Gender } from 'src/entities/gender.enum';
 export class CreateDirectorDto {
 
     @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
+    @IsNotEmpty()
+    @IsString()
    first_name: string;
 
    @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
+    @IsNotEmpty()
+    @IsString()
     last_name: string;
 
     @ApiProperty()
@@ -27,8 +27,8 @@ export class CreateDirectorDto {
   @IsOptional()
   @IsString()
    bio?: string;
-   @ApiProperty()
 
+   @ApiProperty()
   @IsNotEmpty()
   @IsEnum(Gender)
   gender: Gender;
@@ -38,15 +38,16 @@ export class CreateDirectorDto {
   @IsString()
   nationality?: string;
 
-  @ApiProperty()
-  @IsOptional()
-  @IsUrl()
-    picture?: string;
     @ApiProperty()
+    @IsOptional()
+    @IsUrl()
+    picture?: string;
 
-  @IsOptional()
-  @IsInt()
-  @IsPositive()
-  number_of_awards?: number;
+
+    @ApiProperty()
+    @IsOptional()
+    @IsInt()
+    @IsPositive()
+    number_of_awards?: number;
 
 }

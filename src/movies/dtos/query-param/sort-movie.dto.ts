@@ -1,12 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsIn, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsIn, IsInt, IsNotEmpty, IsOptional, IsString, Max, Min } from "class-validator";
 
 
 export class SortAndFilterAndPaginateMovieDto{
     @ApiProperty()
     @IsOptional()
     @IsString() 
-    @IsIn(['releaseDate' , 'averageRate'])
+    @IsIn(['releaseDate' , 'averageRating'])
     sortBy? : string ;
 
 
@@ -22,6 +22,13 @@ export class SortAndFilterAndPaginateMovieDto{
     @IsString() 
     @IsNotEmpty()
     offset? : string ;
+
+
+    @ApiProperty()
+    @IsOptional()
+    @IsNotEmpty() 
+    @IsString()
+    limit? : string ;
 
     @ApiProperty()
     @IsOptional()
