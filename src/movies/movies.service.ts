@@ -13,6 +13,32 @@ export class MoviesService {
     }
 
 
+    private convertSortByQueryParamToHaveSameFormAsDatabaseSchema(value : string | undefined) : string | undefined{
+        // first check query parameter sort by is provided in the url ot not.
+        // if provided convert it to have the same form of database schema.
+        let sortBy: string | undefined ;
+        if(value === undefined){
+            sortBy = value
+        }else{
+            if(value === 'releaseDate'){
+                sortBy = 'release_date' ;
+            }else if(value === 'averageRating'){
+                sortBy = 'average_rating'
+            }else{
+                sortBy = undefined;
+            }
+        }
+        return sortBy ;
+    }
+
+
+    private convertSortOrderQueryParamToHaveSameFormAsDatabaseSchema(value) : 'ASC' | 'DESC'  {
+        // convert sort to be in upper-case as typeorm must be upper-case to do orderby.
+        // make default sorting is to get items in desc order.
+        let sortOrder : 'ASC' | 'DESC' = 'DESC' ;
+        if(value === 'asc') sortOrder = 'ASC' ;
+        return sortOrder ;
+    }
 
     public async getMoviesByLimitAndOffesetAndFilterBy(sortMovieWithOffsetDto : SortAndFilterAndPaginateMovieDto  ): Promise<Partial<Movie[]>>   {
 
@@ -24,18 +50,13 @@ export class MoviesService {
             offset = 0 ;
         }
 
-        // first check query parameter sort by is provided in the url ot not.
-        // if provided convert it to have the same form of database schema.
-        const sortBy : undefined | string = sortMovieWithOffsetDto.sortBy === undefined ? sortMovieWithOffsetDto.sortBy  : (sortMovieWithOffsetDto.sortBy === 'releaseDate' ? 'release_date' : 'average_rating') ;
-        
-        // convert sort to be in upper-case as typeorm must be upper-case to do orderby.
-        // make default sorting is to get items in desc order.
-        let sortOrder : 'ASC' | 'DESC' = 'DESC' ;
-        if(sortMovieWithOffsetDto.sortOrder === 'asc') sortOrder = 'ASC' ;
+        let sortBy: string | undefined  = this.convertSortByQueryParamToHaveSameFormAsDatabaseSchema(sortMovieWithOffsetDto.sortBy);
+
+  
+        let sortOrder : 'ASC' | 'DESC' = this.convertSortOrderQueryParamToHaveSameFormAsDatabaseSchema(sortMovieWithOffsetDto.sortOrder);
    
 
-        console.log(sortMovieWithOffsetDto.limit)
-        // contrain the limit attribute
+        // constrain the limit attribute
         const limit : number = sortMovieWithOffsetDto.limit === undefined ? 10 : (parseInt(sortMovieWithOffsetDto.limit) > 100  ? 10 : parseInt(sortMovieWithOffsetDto.limit)) ;
         if(isNaN(limit)){
             // is not a valid number (can not be parsed into integer).

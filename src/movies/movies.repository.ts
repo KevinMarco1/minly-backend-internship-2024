@@ -46,11 +46,11 @@ export class MoviesRepository {
     .take(limit)
     .skip(offset);
   
-    if (sortBy) {
+    if (sortBy !== undefined) {
       queryBuilder.orderBy(`movie.${sortBy}`, sortOrder);
     }
   
-    if (filterValue) {
+    if (filterValue !== undefined) {
       queryBuilder.andWhere("(LOWER(movie.title) = LOWER(:filterValue))", { filterValue });
     }
   

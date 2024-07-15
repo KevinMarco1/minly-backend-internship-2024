@@ -6,7 +6,7 @@ export class SortAndFilterAndPaginateMovieDto{
     @ApiProperty()
     @IsOptional()
     @IsString() 
-    @IsIn(['releaseDate' , 'averageRating'])
+    @IsIn(['releaseDate' , 'averageRating' , 'none'])
     sortBy? : string ;
 
 
