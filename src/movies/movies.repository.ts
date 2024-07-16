@@ -68,25 +68,27 @@ export class MoviesRepository {
 
 
   public async getMovieDetails(movieUUID : string){
-      const data =  await this.movieRepository.createQueryBuilder('movie')
-      .leftJoinAndSelect('movie.director', 'director')
-      .leftJoinAndSelect('movie.actors', 'actor')
-      .select([
-        'movie.title',
-        'movie.release_date',
-        'movie.poster',
-        'movie.average_rating',
-        'movie.trailer',
-        'movie.uuid',
-        'director.first_name',
-        'director.last_name',
-        'director.uuid',
-        'actor.first_name',
-        'actor.last_name',
-        'actor.uuid'
-      ])
-      .where('movie.uuid = :uuid', { uuid: movieUUID })
-      .getOne();
+    const data = await this.movieRepository.createQueryBuilder('movie')
+    .leftJoinAndSelect('movie.director', 'director')
+    .leftJoinAndSelect('movie.actors', 'actor')
+    .leftJoinAndSelect('movie.categories', 'category')
+    .select([
+      'movie.title',
+      'movie.release_date',
+      'movie.poster',
+      'movie.average_rating',
+      'movie.trailer',
+      'movie.uuid',
+      'director.first_name',
+      'director.last_name',
+      'director.uuid',
+      'actor.first_name',
+      'actor.last_name',
+      'actor.uuid',
+      'category.name'  // Adding category name to the select statement
+    ])
+    .where('movie.uuid = :uuid', { uuid: movieUUID })
+    .getOne();
 
       return data;
 
