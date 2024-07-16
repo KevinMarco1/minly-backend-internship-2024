@@ -40,7 +40,8 @@ export class MoviesService {
         return sortOrder ;
     }
 
-    public async getMoviesByLimitAndOffesetAndFilterBy(sortMovieWithOffsetDto : SortAndFilterAndPaginateMovieDto  ): Promise<Partial<Movie[]>>   {
+    public async getMoviesByLimitAndOffesetAndFilterBy(sortMovieWithOffsetDto : SortAndFilterAndPaginateMovieDto  ): Promise<{ movies: Partial<Movie[]>; totalNumberOfPages: number }>
+    {
 
         // check its a valid offset or not.
         let offset : number = sortMovieWithOffsetDto.offset === undefined ? 0 : parseInt(sortMovieWithOffsetDto.offset) ;
@@ -52,22 +53,23 @@ export class MoviesService {
 
         let sortBy: string | undefined  = this.convertSortByQueryParamToHaveSameFormAsDatabaseSchema(sortMovieWithOffsetDto.sortBy);
 
-  
         let sortOrder : 'ASC' | 'DESC' = this.convertSortOrderQueryParamToHaveSameFormAsDatabaseSchema(sortMovieWithOffsetDto.sortOrder);
    
-
         // constrain the limit attribute
-        const limit : number = sortMovieWithOffsetDto.limit === undefined ? 10 : (parseInt(sortMovieWithOffsetDto.limit) > 100  ? 10 : parseInt(sortMovieWithOffsetDto.limit)) ;
+        const limit : number = sortMovieWithOffsetDto.limit === undefined ? 8 : (parseInt(sortMovieWithOffsetDto.limit) > 50  ? 8 : parseInt(sortMovieWithOffsetDto.limit)) ;
         if(isNaN(limit)){
             // is not a valid number (can not be parsed into integer).
             // for now we will make it have a zero value.
             offset = 0 ;
         }
 
-        return  await this.movieRepository.getMoviesByLimitAndOffesetAndFilterBy(limit , offset , sortBy , sortOrder, sortMovieWithOffsetDto.filterValue) ;
+        const {movies, totalCount} =  await this.movieRepository.getMoviesByLimitAndOffesetAndFilterBy(limit , offset , sortBy , sortOrder, sortMovieWithOffsetDto.filterValue) ;
 
+        // apply logic to calculate page based on limit
+        const totalNumberOfPages = Math.ceil(totalCount / limit) - 1;
+
+        return {movies , totalNumberOfPages} ;
     }
-
 
 
 

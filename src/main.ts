@@ -23,7 +23,7 @@ async function bootstrap() {
   
 
     const config = new DocumentBuilder()
-    .setTitle('Horus Eye')
+    .setTitle('Movie Eye')
     .setDescription('API description')
     .setVersion('1.0')
     .build();

@@ -34,14 +34,15 @@ export class MoviesRepository {
     sortBy: string | undefined,
     sortOrder: 'ASC' | 'DESC',
     filterValue?: string
-  ): Promise<Partial<Movie[]>> {
+  ): Promise<{ movies: Partial<Movie[]>; totalCount: number }> {
   
     const queryBuilder = this.movieRepository.createQueryBuilder('movie')
     .select([
         'movie.poster',
         'movie.uuid',
         'movie.average_rating',
-        "movie.release_date"
+        "movie.release_date",
+        "movie.title"
     ])
     .take(limit)
     .skip(offset);
@@ -53,8 +54,15 @@ export class MoviesRepository {
     if (filterValue !== undefined) {
       queryBuilder.andWhere("(LOWER(movie.title) = LOWER(:filterValue))", { filterValue });
     }
+
+
+    const [movies, totalCount] = await Promise.all([
+      queryBuilder.getMany(),
+      this.movieRepository.createQueryBuilder('movie')
+        .getCount()
+    ]);
   
-    return await queryBuilder.getMany();
+    return { movies, totalCount };
   }
   
 }
