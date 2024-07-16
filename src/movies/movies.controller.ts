@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dtos/body/create-movie.dto';
 import { SortAndFilterAndPaginateMovieDto } from './dtos/query-param/sort-movie.dto';
@@ -18,6 +18,14 @@ export class MoviesController {
        @Query() sortAndFilterAndPaginateMovieDto: SortAndFilterAndPaginateMovieDto,
 ){
         return this.movieService.getMoviesByLimitAndOffesetAndFilterBy( sortAndFilterAndPaginateMovieDto  ) ;
+    }
+
+
+    @Get(':uuid/details')
+    async getMovieDetails(
+        @Param('uuid') movieUUID : string
+    ){
+        return this.movieService.getMovieDetails(movieUUID) ;
     }
 
 }
