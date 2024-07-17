@@ -21,7 +21,7 @@ export class MoviesController {
     }
 
 
-    @Get(':uuid/details')
+    @Get(':uuid')
     async getMovieDetails(
         @Param('uuid') movieUUID : string
     ){
