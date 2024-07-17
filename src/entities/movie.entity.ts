@@ -5,6 +5,7 @@ import { Actor } from './actor.entity';
 import { Festival } from './festival.entity';
 import { Director } from './director.entity';
 import { Category } from './category.entity';
+import { Language } from './language.entity';
 
 
 @Entity()
@@ -71,5 +72,9 @@ export class Movie extends AutoTimestamp {
     inverseJoinColumn: { name: 'category_id', referencedColumnName: 'id' }
   })
   categories: Category[];
+
+  @ManyToOne(() => Language, (language) => language.movies)
+  @JoinColumn({ name: 'language_id' }) // Ensure this is explicitly set
+  language: Language;
   
 }
