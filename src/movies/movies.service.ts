@@ -69,7 +69,41 @@ export class MoviesService {
     }
 
     public async getMovieDetails(movieUUID : string){
-        return this.movieRepository.getMovieDetails(movieUUID);
+        const movieData = await this.movieRepository.getMovieDetails(movieUUID);
+
+        if (movieData) {
+          const { uuid, poster, title, average_rating, release_date, trailer, actors, director } = movieData;
+    
+          const updatedActors = actors?.map(({ first_name, last_name, ...rest }) => ({
+            ...rest,
+            name: `${first_name} ${last_name}`
+          }));
+    
+          const { first_name: directorFirstName, last_name: directorLastName, ...restDirector } = director || {};
+          const updatedDirector = director
+            ? {
+                ...restDirector,
+                name: `${directorFirstName} ${directorLastName}`
+              }
+            : null;
+            
+          const updatedMovieData = {
+            movie:{
+                uuid,
+                poster,
+                title,
+                average_rating,
+                release_date,
+                trailer,
+            },
+            actors: updatedActors,
+            director: updatedDirector
+          };
+    
+          return updatedMovieData;
+        }
+    
+        return movieData;
     }
 
 }
