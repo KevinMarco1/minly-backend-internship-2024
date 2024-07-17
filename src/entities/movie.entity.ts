@@ -35,9 +35,6 @@ export class Movie extends AutoTimestamp {
   @Column({ type: 'text', nullable: true })
   overview: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  language: string;
-
 
   @ManyToOne(() => Director, (director) => director.movies)
   @JoinColumn({ name: 'director_id' }) // Ensure this is explicitly set

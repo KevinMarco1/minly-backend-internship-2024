@@ -68,11 +68,8 @@ export class MoviesService {
         return {movies , totalNumberOfPages} ;
     }
 
-
     public async getMovieDetails(movieUUID : string){
         return this.movieRepository.getMovieDetails(movieUUID);
     }
-
-
 
 }

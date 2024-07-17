@@ -85,7 +85,7 @@ export class MoviesRepository {
       'actor.first_name',
       'actor.last_name',
       'actor.uuid',
-      'category.name'  // Adding category name to the select statement
+      'category.name'  
     ])
     .where('movie.uuid = :uuid', { uuid: movieUUID })
     .getOne();
