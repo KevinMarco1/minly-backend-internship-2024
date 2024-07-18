@@ -5,8 +5,8 @@ import { SortAndFilterAndPaginateMovieDto } from './dtos/query-param/sort-movie.
 
 @Controller('movies')
 export class MoviesController {
+    
     constructor(private movieService : MoviesService){}
-
 
     @Post()
     async createMovie(@Body() createMovieDto : CreateMovieDto){
