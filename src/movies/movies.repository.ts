@@ -70,7 +70,8 @@ export class MoviesRepository {
   public async getMovieDetails(movieUUID : string){
     const data = await this.movieRepository.createQueryBuilder('movie')
     .leftJoinAndSelect('movie.director', 'director')
-    .leftJoinAndSelect('movie.actors', 'actor')
+    .leftJoinAndSelect('movie.movieActors', 'movieActor')
+    .leftJoinAndSelect('movieActor.actor', 'actor')
     .leftJoinAndSelect('movie.categories', 'category')
     .leftJoinAndSelect('movie.language' , 'language')
     .leftJoinAndSelect('movie.writers' , 'writer')
@@ -81,6 +82,7 @@ export class MoviesRepository {
       'movie.average_rating',
       'movie.trailer',
       'movie.uuid',
+      'movie.overview',
       'director.first_name',
       'director.last_name',
       'director.uuid',
@@ -89,6 +91,7 @@ export class MoviesRepository {
       'actor.uuid',
       'category.name',
       'language.name',
+      'movieActor.character',
       'writer.first_name',
       'writer.last_name',
     ])
