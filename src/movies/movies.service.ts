@@ -83,8 +83,7 @@ export class MoviesService {
     
           const updatedActors = movieActors.map(movieActor => ({
             character: movieActor.character,
-            first_name: movieActor.actor.first_name,
-            last_name: movieActor.actor.last_name,
+            name: `${movieActor.actor.first_name} ${ movieActor.actor.last_name}`,
             uuid: movieActor.actor.uuid,
           }));
           
