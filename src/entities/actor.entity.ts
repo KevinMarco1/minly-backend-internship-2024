@@ -1,8 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, BeforeInsert } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, BeforeInsert, OneToMany } from 'typeorm';
 import { Gender } from './gender.enum';
 import { AutoTimestamp } from './auto-time-stamp';
 import { uuidv7 } from '@kripod/uuidv7';
 import { Movie } from './movie.entity';
+import { MovieActor } from './MovieActor.entity';
 
 
 @Entity()
@@ -37,14 +38,13 @@ export class Actor extends AutoTimestamp {
   @Column({ type: 'varchar', length: 1000, nullable: true })
   picture: string;
 
-  @ManyToMany(() => Movie, (movie) => movie.actors)
-  movies: Movie[];
-
-
   @BeforeInsert()
   generateUUID() {
     this.uuid = uuidv7();
   }
+
+  @OneToMany(() => MovieActor, (movieActor) => movieActor.actor)
+  movieActors: MovieActor[];
 
   
 }

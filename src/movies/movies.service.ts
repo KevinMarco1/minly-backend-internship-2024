@@ -79,10 +79,15 @@ export class MoviesService {
         const movieData = await this.movieRepository.getMovieDetails(movieUUID);
 
         if (movieData) {
-          const { uuid, poster, title, average_rating, release_date, trailer, actors, director , categories , writers, language} = movieData;
+          const { uuid, poster, title, average_rating, release_date, trailer, director , categories , writers, language,  movieActors ,overview} = movieData;
     
-          const updatedActors = this.concatenateFirstAndLastName(actors) ;
-
+          const updatedActors = movieActors.map(movieActor => ({
+            character: movieActor.character,
+            first_name: movieActor.actor.first_name,
+            last_name: movieActor.actor.last_name,
+            uuid: movieActor.actor.uuid,
+          }));
+          
           const updatedWriters = this.concatenateFirstAndLastName(writers) ;
     
           const { first_name: directorFirstName, last_name: directorLastName, ...restDirector } = director || {};
@@ -101,6 +106,7 @@ export class MoviesService {
                 average_rating,
                 release_date,
                 trailer,
+                overview,
             },
             actors: updatedActors,
             director: updatedDirector,
