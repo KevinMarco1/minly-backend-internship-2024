@@ -6,6 +6,7 @@ import { Festival } from './festival.entity';
 import { Director } from './director.entity';
 import { Category } from './category.entity';
 import { Language } from './language.entity';
+import { Writer } from './writer.entity';
 
 
 @Entity()
@@ -16,7 +17,6 @@ export class Movie extends AutoTimestamp {
   @Column({ type: 'varchar', unique: true })
   uuid: string;
   
-
   @Column({ type: 'varchar', length: 1000, nullable: true })
   poster: string;
 
@@ -32,21 +32,17 @@ export class Movie extends AutoTimestamp {
   @Column({ type: 'varchar', length: 1000, nullable: true })
   trailer: string;
 
-
   @Column({ type: 'text', nullable: true })
   overview: string;
-
 
   @ManyToOne(() => Director, (director) => director.movies)
   @JoinColumn({ name: 'director_id' }) // Ensure this is explicitly set
   director: Director;
 
-
   @BeforeInsert()
   generateUUID() {
     this.uuid = uuidv7();
   }
-
 
   @ManyToMany(() => Actor, (actor) => actor.movies)
   @JoinTable({
@@ -76,5 +72,14 @@ export class Movie extends AutoTimestamp {
   @ManyToOne(() => Language, (language) => language.movies)
   @JoinColumn({ name: 'language_id' }) // Ensure this is explicitly set
   language: Language;
+
+
+  @ManyToMany(() => Writer, (writer) => writer.movies)
+  @JoinTable({
+    name: 'movie_writer',
+    joinColumn: { name: 'movie_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'writer_id', referencedColumnName: 'id' }
+  })
+  writers: Writer[];
   
 }

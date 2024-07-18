@@ -37,6 +37,10 @@ export class Writer extends AutoTimestamp {
   @Column({ type: 'varchar', length: 1000, nullable: true })
   picture: string;
 
+
+  @ManyToMany(() => Movie, (movie) => movie.writers)
+  movies: Movie[];
+
   @BeforeInsert()
   generateUUID() {
     this.uuid = uuidv7();
