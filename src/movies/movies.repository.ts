@@ -73,6 +73,7 @@ export class MoviesRepository {
     .leftJoinAndSelect('movie.actors', 'actor')
     .leftJoinAndSelect('movie.categories', 'category')
     .leftJoinAndSelect('movie.language' , 'language')
+    .leftJoinAndSelect('movie.writers' , 'writer')
     .select([
       'movie.title',
       'movie.release_date',
@@ -87,7 +88,9 @@ export class MoviesRepository {
       'actor.last_name',
       'actor.uuid',
       'category.name',
-      'language.name'
+      'language.name',
+      'writer.first_name',
+      'writer.last_name',
     ])
     .where('movie.uuid = :uuid', { uuid: movieUUID })
     .getOne();

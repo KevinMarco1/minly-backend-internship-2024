@@ -68,16 +68,22 @@ export class MoviesService {
         return {movies , totalNumberOfPages} ;
     }
 
+    private concatenateFirstAndLastName(object : any){
+        return  object?.map(({ first_name, last_name, ...rest }) => ({
+            ...rest,
+            name: `${first_name} ${last_name}`
+          }));
+    }
+
     public async getMovieDetails(movieUUID : string){
         const movieData = await this.movieRepository.getMovieDetails(movieUUID);
 
         if (movieData) {
-          const { uuid, poster, title, average_rating, release_date, trailer, actors, director , categories} = movieData;
+          const { uuid, poster, title, average_rating, release_date, trailer, actors, director , categories , writers, language} = movieData;
     
-          const updatedActors = actors?.map(({ first_name, last_name, ...rest }) => ({
-            ...rest,
-            name: `${first_name} ${last_name}`
-          }));
+          const updatedActors = this.concatenateFirstAndLastName(actors) ;
+
+          const updatedWriters = this.concatenateFirstAndLastName(writers) ;
     
           const { first_name: directorFirstName, last_name: directorLastName, ...restDirector } = director || {};
           const updatedDirector = director
@@ -98,7 +104,10 @@ export class MoviesService {
             },
             actors: updatedActors,
             director: updatedDirector,
-            categories:categories
+            categories:categories,
+            writers: updatedWriters,
+            language: language,
+
           };
     
           return updatedMovieData;
