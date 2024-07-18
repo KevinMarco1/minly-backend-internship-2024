@@ -72,7 +72,7 @@ export class MoviesService {
         const movieData = await this.movieRepository.getMovieDetails(movieUUID);
 
         if (movieData) {
-          const { uuid, poster, title, average_rating, release_date, trailer, actors, director } = movieData;
+          const { uuid, poster, title, average_rating, release_date, trailer, actors, director , categories} = movieData;
     
           const updatedActors = actors?.map(({ first_name, last_name, ...rest }) => ({
             ...rest,
@@ -97,7 +97,8 @@ export class MoviesService {
                 trailer,
             },
             actors: updatedActors,
-            director: updatedDirector
+            director: updatedDirector,
+            categories:categories
           };
     
           return updatedMovieData;
