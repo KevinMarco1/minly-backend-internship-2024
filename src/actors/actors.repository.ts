@@ -23,6 +23,7 @@ export class ActorsRepository {
             'actor.last_name',
             'actor.birth_date',
             'actor.gender',
+            'actor.average_rating',
             'actor.bio',
             'actor.nationality',
             'actor.picture',

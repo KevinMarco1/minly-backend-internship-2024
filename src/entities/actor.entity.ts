@@ -39,6 +39,9 @@ export class Actor extends AutoTimestamp {
   @Column({ type: 'varchar', length: 1000, nullable: true })
   picture: string;
 
+  @Column({ type: 'float', default: 0 })
+  average_rating: number;
+
   @BeforeInsert()
   generateUUID() {
     this.uuid = uuidv7();
