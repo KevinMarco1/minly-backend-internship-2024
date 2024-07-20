@@ -23,7 +23,7 @@ import typeorm from './config/typeorm';
     MoviesModule,
     ActorsModule,
   ],
-  controllers: [AppController, ActorsController],
+  controllers: [AppController],
   providers: [AppService],
 })
 
