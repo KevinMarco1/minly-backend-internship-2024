@@ -7,7 +7,8 @@ import { Director } from './director.entity';
 import { Category } from './category.entity';
 import { Language } from './language.entity';
 import { Writer } from './writer.entity';
-import { MovieActor } from './MovieActor.entity';
+import { MovieActor } from './movie-actor.entity';
+import { MovieActorAward } from './movie-actor-award.entity';
 
 
 @Entity()
@@ -52,6 +53,8 @@ export class Movie extends AutoTimestamp {
   @OneToMany(() => MovieActor, (movieActor) => movieActor.movie)
   movieActors: MovieActor[];
 
+  @OneToMany(() => MovieActorAward, (movieActorAward) => movieActorAward.movie)
+  movieActorAwards: MovieActorAward[]; 
 
   @ManyToMany(() => Festival, (festival) => festival.movies)
   @JoinTable({

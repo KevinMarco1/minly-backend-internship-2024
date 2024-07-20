@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { MovieActorAward } from './movie-actor-award.entity';
 
 @Entity()
 export class Award {
@@ -7,4 +8,7 @@ export class Award {
 
   @Column({ length: 100 })
   name: string;
+
+  @OneToMany(() => MovieActorAward, (movieActorAward) => movieActorAward.award)
+  movieActorAwards: MovieActorAward[]; 
 }

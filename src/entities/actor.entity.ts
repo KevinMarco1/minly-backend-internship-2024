@@ -3,7 +3,8 @@ import { Gender } from './gender.enum';
 import { AutoTimestamp } from './auto-time-stamp';
 import { uuidv7 } from '@kripod/uuidv7';
 import { Movie } from './movie.entity';
-import { MovieActor } from './MovieActor.entity';
+import { MovieActor } from './movie-actor.entity';
+import { MovieActorAward } from './movie-actor-award.entity';
 
 
 @Entity()
@@ -45,6 +46,10 @@ export class Actor extends AutoTimestamp {
 
   @OneToMany(() => MovieActor, (movieActor) => movieActor.actor)
   movieActors: MovieActor[];
+
+
+  @OneToMany(() => MovieActorAward, (movieActorAward) => movieActorAward.actor)
+  movieActorAwards: MovieActorAward[]; 
 
   
 }
