@@ -5,6 +5,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MoviesModule } from './movies/movies.module';
 import { DirectorsModule } from './directors/directors.module';
+import { ActorsController } from './actors/actors.controller';
+import { ActorsModule } from './actors/actors.module';
 import typeorm from './config/typeorm';
 
 @Module({
@@ -19,8 +21,9 @@ import typeorm from './config/typeorm';
     }),
     DirectorsModule,
     MoviesModule,
+    ActorsModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, ActorsController],
   providers: [AppService],
 })
 
