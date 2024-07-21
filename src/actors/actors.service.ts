@@ -5,14 +5,18 @@ import { ActorsRepository } from './actors.repository';
 export class ActorsService {
     constructor(readonly actorsRepository: ActorsRepository){}
 
+
     async getActorWithAwardsByUuid(uuid : string){
-        const{movieActorAwards , first_name , last_name ,...rest}  = await this.actorsRepository.getActorWithAwardsByUuid(uuid) ;
+        let actorDetailedData = await this.actorsRepository.getActorWithAwardsByUuid(uuid) ;
+
+        const{movieActorAwards , first_name , last_name , movieActors ,...rest}  = actorDetailedData ;
+
+        const actingList = movieActors ;
 
         const upadtedActorInformation = {
             name: `${first_name} ${last_name}`,
             ...rest,
         }
-
 
         const updateActorAwards = movieActorAwards.map(({movie , award , ...restInfo}) => {
             return {
@@ -21,9 +25,10 @@ export class ActorsService {
                 movie
             }
         } ) ;
-        
+
         return{
-            'actor_information:': upadtedActorInformation,
+            'actor_information': upadtedActorInformation,
+            'acting_list': actingList,
             'awards': updateActorAwards
         }
 

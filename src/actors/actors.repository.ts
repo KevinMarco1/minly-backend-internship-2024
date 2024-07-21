@@ -17,6 +17,8 @@ export class ActorsRepository {
         .leftJoinAndSelect('actor.movieActorAwards', 'movieActorAward')
         .leftJoinAndSelect('movieActorAward.movie', 'movie')
         .leftJoinAndSelect('movieActorAward.award', 'award')
+        .leftJoinAndSelect('actor.movieActors', 'movieActor')
+        .leftJoinAndSelect('movieActor.movie', 'movieCharacter')
         .where('actor.uuid = :uuid', { uuid })
         .select([
             'actor.first_name',
@@ -32,6 +34,9 @@ export class ActorsRepository {
             'movie.uuid',
             'movie.title',
             'award.name',
+            'movieActor.character',
+            'movieCharacter.title',
+            'movieCharacter.uuid'
         ])
       .getOne();
       }

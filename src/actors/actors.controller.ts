@@ -3,7 +3,6 @@ import { ActorsService } from './actors.service';
 
 @Controller('actors')
 export class ActorsController {
-
     constructor(readonly actorsService: ActorsService){}
 
     
