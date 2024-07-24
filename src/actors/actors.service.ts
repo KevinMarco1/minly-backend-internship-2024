@@ -8,7 +8,7 @@ export class ActorsService {
 
     async getActorWithAwardsByUuid(uuid : string){
         let actorDetailedData = await this.actorsRepository.getActorWithAwardsByUuid(uuid) ;
-
+        
         const{movieActorAwards , first_name , last_name , movieActors , ...rest}  = actorDetailedData ;
 
         const actingList = movieActors ;
