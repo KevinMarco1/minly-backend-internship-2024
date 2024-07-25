@@ -1,11 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, PrimaryColumn } from 'typeorm';
 import { Movie } from './movie.entity';
 import { Actor } from './actor.entity';
-
 @Entity('movie_actor')
 export class MovieActor {
-  @PrimaryGeneratedColumn('increment', { type: 'bigint' })
-  id: number;
+  @PrimaryColumn({ type: 'bigint' })
+  movie_id: number;
+
+  @PrimaryColumn({ type: 'bigint' })
+  actor_id: number;
 
   @Column({ type: 'varchar', length: 255, nullable: false })
   character: string;
